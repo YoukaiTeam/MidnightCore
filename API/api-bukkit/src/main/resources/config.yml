@@ -1,0 +1,2 @@
+api:
+  type: LOBBY                       # Server model type (Ex: SPECIAL - BUNGEE - LOBBY - GAME)
