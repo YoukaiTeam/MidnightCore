@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @author MelonDev
  * @since 0.0.1
  */
+@SuppressWarnings("UnstableApiUsage")
 public final class CallbackHelper {
     /**
      * Add a callback using Futures.

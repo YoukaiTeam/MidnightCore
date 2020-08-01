@@ -1,11 +1,15 @@
 package net.absolutioncraft.api.bukkit;
 
+import com.google.inject.Inject;
 import net.absolutioncraft.api.bukkit.binder.BinderModule;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
+import net.absolutioncraft.api.bukkit.menu.example.ExampleMenuCommand;
+import net.absolutioncraft.api.bukkit.menu.listener.MenuInventoryListener;
 import net.absolutioncraft.api.shared.SharedModule;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -18,10 +22,19 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 0.0.1
  */
 public final class BukkitAPI extends JavaPlugin {
+    @Inject private MenuInventoryListener menuInventoryListener;
+    @Inject private ExampleMenuCommand exampleMenuCommand;
+
     @Override
     public void onEnable() {
         this.setupInjection(new SharedModule());
         this.saveDefaultConfig();
+
+        this.setupListeners(menuInventoryListener);
+    }
+
+    private void setupListeners(final Listener... listeners) {
+        for (Listener listener : listeners) this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     private void setupInjection(final Module... modules) {
