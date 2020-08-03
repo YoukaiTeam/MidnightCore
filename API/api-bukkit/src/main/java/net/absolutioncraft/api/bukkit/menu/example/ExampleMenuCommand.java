@@ -3,7 +3,7 @@ package net.absolutioncraft.api.bukkit.menu.example;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import net.absolutioncraft.api.bukkit.menu.Menu;
-import net.absolutioncraft.api.bukkit.menu.MenuProvider;
+import net.absolutioncraft.api.bukkit.menu.provider.MenuProvider;
 
 import net.absolutioncraft.api.shared.serialization.TimeSerializer;
 import net.absolutioncraft.api.shared.user.model.User;

@@ -1,5 +1,6 @@
-package net.absolutioncraft.api.bukkit.menu;
+package net.absolutioncraft.api.bukkit.menu.provider;
 
+import net.absolutioncraft.api.bukkit.menu.Menu;
 import net.absolutioncraft.api.shared.user.model.User;
 
 import org.jetbrains.annotations.NotNull;

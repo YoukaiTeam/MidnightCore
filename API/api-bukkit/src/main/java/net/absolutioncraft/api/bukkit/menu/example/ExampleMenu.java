@@ -2,7 +2,7 @@ package net.absolutioncraft.api.bukkit.menu.example;
 
 import com.google.inject.Inject;
 import net.absolutioncraft.api.bukkit.menu.Menu;
-import net.absolutioncraft.api.bukkit.menu.MenuProvider;
+import net.absolutioncraft.api.bukkit.menu.provider.MenuProvider;
 import net.absolutioncraft.api.shared.user.model.User;
 import org.jetbrains.annotations.NotNull;
 
