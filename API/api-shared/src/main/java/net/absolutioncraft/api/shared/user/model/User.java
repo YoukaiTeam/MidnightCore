@@ -3,6 +3,7 @@ package net.absolutioncraft.api.shared.user.model;
 import com.google.gson.annotations.SerializedName;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import net.absolutioncraft.api.shared.rank.UserRank;
 import net.absolutioncraft.api.shared.serialization.TimeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +21,8 @@ public final class User implements IUser {
     @SerializedName("username") private @NotNull String username;
     @SerializedName("displayName") private @NotNull String displayName;
     @SerializedName("email") private @Nullable String email;
+
+    @SerializedName("rank") private UserRank userRank;
 
     @SerializedName("lastSeen") private long lastSeen;
     @SerializedName("lastGame") private @NotNull String lastGame;
@@ -52,6 +55,16 @@ public final class User implements IUser {
     @Override
     public @Nullable String getEmail() {
         return this.email;
+    }
+
+    @Override
+    public @NotNull UserRank getUserRank() {
+        return userRank;
+    }
+
+    @Override
+    public void setUserRank(@NotNull String groupIdentifier) {
+        this.userRank = UserRank.valueOf(groupIdentifier);
     }
 
     @Override

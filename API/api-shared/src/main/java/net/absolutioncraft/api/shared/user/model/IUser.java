@@ -1,5 +1,7 @@
 package net.absolutioncraft.api.shared.user.model;
 
+import net.absolutioncraft.api.shared.rank.UserRank;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,8 +17,8 @@ public interface IUser {
     @NotNull String getDisplayName();
     @Nullable String getEmail();
 
-    //@NotNull Group getGroup(); // TODO: Make Group objets
-    //void setGroup(@NotNull String groupIdentifier);
+    @NotNull UserRank getUserRank();
+    void setUserRank(@NotNull String groupIdentifier);
 
     @NotNull Date getLastSeen();
     @NotNull String getLastGame();
