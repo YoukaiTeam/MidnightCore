@@ -1,5 +1,7 @@
 package net.absolutioncraft.api.shared.serialization;
 
+import java.util.Date;
+
 /**
  * <h1>String Serializer</h1>
  * StringSerializer class contains util methods
@@ -20,5 +22,18 @@ public final class StringSerializer {
      */
     public static String capitalizeString(String string) {
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
+
+    public static String getSupporterHearts(Date set, Date expiration) {
+        int oneMonth = 2592000;
+        int twoMonths = 5184000;
+        int threeMonths = 7776000;
+        int rankTime = TimeSerializer.getUnixStamp(expiration) - TimeSerializer.getUnixStamp(set);
+
+        if (rankTime >= oneMonth && rankTime < twoMonths) return "❤";
+        if (rankTime >= twoMonths && rankTime < threeMonths) return "❤❤";
+        if (rankTime >= threeMonths) return "❤❤❤";
+
+        return "❤❤❤";
     }
 }
