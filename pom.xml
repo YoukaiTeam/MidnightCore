@@ -21,6 +21,13 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
+    <distributionManagement>
+        <repository>
+            <id>midnight-releases</id>
+            <url>https://repo.absolutioncraft.net/repository/midnight-releases</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>spigot-repo</id>
