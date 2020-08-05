@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import net.absolutioncraft.api.shared.serialization.JsonSerializer;
 import net.absolutioncraft.api.shared.serialization.model.Deserializer;
 import net.absolutioncraft.api.shared.user.model.IUser;
+import net.absolutioncraft.api.shared.user.model.User;
 
 /**
  * @author MelonDev
@@ -19,6 +20,6 @@ public final class UserDataDeserializer implements Deserializer<IUser> {
     @Override
     public IUser deserialize(String json) {
         final JsonObject jsonObject = this.jsonSerializer.parseObject(json);
-        return gson.fromJson(jsonObject, IUser.class);
+        return gson.fromJson(jsonObject, User.class);
     }
 }
