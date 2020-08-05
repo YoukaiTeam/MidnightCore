@@ -51,8 +51,8 @@ public final class UserDataStorage implements UserDataProvider {
 
     @Override
     public IUser getCachedUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        if (this.redisClient.existsKey("user:" + username.toLowerCase())) {
-            return this.gson.fromJson(this.redisClient.getString("user:" + username.toLowerCase()), IUser.class);
+        if (this.redisClient.existsKey("user:" + username)) {
+            return this.gson.fromJson(this.redisClient.getString("user:" + username), IUser.class);
         } else {
             return getUserByNameSync(username);
         }
@@ -71,14 +71,14 @@ public final class UserDataStorage implements UserDataProvider {
 
     @Override
     public IUser getUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        final IUser user = this.userDataDeserializer.deserialize(this.getUserDataRequest.executeRequest(username.toLowerCase()));
+        final IUser user = this.userDataDeserializer.deserialize(this.getUserDataRequest.executeRequest(username, true));
         cacheUserInstance(user);
         return user;
     }
 
     @Override
     public IUser updateUserData(IUser user) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        this.updateUserDataRequest.executeRequest(user.getUsername().toLowerCase(), user);
+        this.updateUserDataRequest.executeRequest(user.getUsername(), user);
         cacheUserInstance(user);
         return user;
     }
