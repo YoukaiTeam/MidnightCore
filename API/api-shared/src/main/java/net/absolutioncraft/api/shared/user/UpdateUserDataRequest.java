@@ -8,6 +8,7 @@ import net.absolutioncraft.api.shared.http.exception.NotFoundException;
 import net.absolutioncraft.api.shared.http.exception.ServiceUnavailableException;
 import net.absolutioncraft.api.shared.http.type.HttpRequestType;
 import net.absolutioncraft.api.shared.user.model.IUser;
+import net.absolutioncraft.api.shared.user.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public final class UpdateUserDataRequest extends HttpRequest {
 
     public String executeRequest(String username, IUser dataSupplier) throws ServiceUnavailableException, InternalServerErrorException, NotFoundException {
         this.username = username;
-        this.data = this.gson.toJson(dataSupplier, IUser.class);
+        this.data = this.gson.toJson(dataSupplier, User.class);
         return getResponse();
     }
 }
