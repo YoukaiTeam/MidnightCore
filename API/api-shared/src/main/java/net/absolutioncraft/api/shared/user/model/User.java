@@ -1,14 +1,14 @@
 package net.absolutioncraft.api.shared.user.model;
 
 import com.google.gson.annotations.SerializedName;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+
 import net.absolutioncraft.api.shared.rank.UserRank;
-import net.absolutioncraft.api.shared.serialization.TimeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 
 /**
  * @author MelonDev
@@ -22,20 +22,20 @@ public final class User implements IUser {
     @SerializedName("displayName") private @NotNull String displayName;
     @SerializedName("email") private @Nullable String email;
 
-    @SerializedName("rank") private UserRank userRank;
+    @SerializedName("userRank") private UserRank userRank;
 
     @SerializedName("lastSeen") private long lastSeen;
     @SerializedName("lastGame") private @NotNull String lastGame;
     @SerializedName("memberSince") private long memberSince;
 
-    @SerializedName("verified") private boolean verified;
+    @SerializedName("verified") private int verified;
     @SerializedName("level") private int level;
     @SerializedName("exp") private long exp;
 
-    @SerializedName("acceptFriends") private boolean acceptFriends;
-    @SerializedName("acceptParties") private boolean acceptParties;
-    @SerializedName("showStatus") private boolean showStatus;
-    @SerializedName("hiding") private boolean hiding;
+    @SerializedName("acceptFriends") private int acceptFriends;
+    @SerializedName("acceptParties") private int acceptParties;
+    @SerializedName("showStatus") private int showStatus;
+    @SerializedName("hiding") private int hiding;
 
     @Override
     public @NotNull String getUniqueId() {
@@ -68,8 +68,8 @@ public final class User implements IUser {
     }
 
     @Override
-    public @NotNull Date getLastSeen() {
-        return TimeSerializer.parseUnixStamp((int) this.lastSeen);
+    public @NotNull Integer getLastSeen() {
+        return (int) this.lastSeen;
     }
 
     @Override
@@ -78,17 +78,17 @@ public final class User implements IUser {
     }
 
     @Override
-    public @NotNull Date getMemberSince() {
-        return TimeSerializer.parseUnixStamp((int) this.memberSince);
+    public @NotNull Integer getMemberSince() {
+        return (int) this.memberSince;
     }
 
     @Override
-    public boolean isVerified() {
+    public int isVerified() {
         return this.verified;
     }
 
     @Override
-    public void setVerified(boolean verified) {
+    public void setVerified(int verified) {
         this.verified = verified;
     }
 
@@ -118,42 +118,42 @@ public final class User implements IUser {
     }
 
     @Override
-    public boolean isAcceptingFriends() {
+    public int isAcceptingFriends() {
         return this.acceptFriends;
     }
 
     @Override
-    public void setAcceptingFriends(boolean accept) {
+    public void setAcceptingFriends(int accept) {
         this.acceptFriends = accept;
     }
 
     @Override
-    public boolean isAcceptingParties() {
+    public int isAcceptingParties() {
         return acceptParties;
     }
 
     @Override
-    public void setAcceptingParties(boolean accept) {
+    public void setAcceptingParties(int accept) {
         this.acceptParties = accept;
     }
 
     @Override
-    public boolean isShowingStatus() {
+    public int isShowingStatus() {
         return showStatus;
     }
 
     @Override
-    public void setShowStatus(boolean accept) {
+    public void setShowStatus(int accept) {
         this.showStatus = accept;
     }
 
     @Override
-    public boolean isHiding() {
+    public int isHiding() {
         return this.hiding;
     }
 
     @Override
-    public void setHiding(boolean hiding) {
+    public void setHiding(int hiding) {
         this.hiding = hiding;
     }
 }

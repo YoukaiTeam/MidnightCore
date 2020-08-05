@@ -20,12 +20,12 @@ public interface IUser {
     @NotNull UserRank getUserRank();
     void setUserRank(@NotNull String groupIdentifier);
 
-    @NotNull Date getLastSeen();
+    @NotNull Integer getLastSeen();
     @NotNull String getLastGame();
-    @NotNull Date getMemberSince();
+    @NotNull Integer getMemberSince();
 
-    boolean isVerified();
-    void setVerified(boolean verified);
+    int isVerified();
+    void setVerified(int verified);
 
     int getLevel();
     void setLevel(int level);
@@ -34,15 +34,15 @@ public interface IUser {
     void addExp(long exp);
     void removeExp(long exp);
 
-    boolean isAcceptingFriends();
-    void setAcceptingFriends(boolean accept);
+    int isAcceptingFriends();
+    void setAcceptingFriends(int accept);
 
-    boolean isAcceptingParties();
-    void setAcceptingParties(boolean accept);
+    int isAcceptingParties();
+    void setAcceptingParties(int accept);
 
-    boolean isShowingStatus();
-    void setShowStatus(boolean show);
+    int isShowingStatus();
+    void setShowStatus(int show);
 
-    boolean isHiding();
-    void setHiding(boolean hiding);
+    int isHiding();
+    void setHiding(int hiding);
 }
