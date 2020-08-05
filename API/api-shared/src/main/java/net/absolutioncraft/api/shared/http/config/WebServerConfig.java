@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter @Singleton
 public class WebServerConfig {
-    private final String host = "https://apis.absolutioncraft.net/";
-    private final Integer port = 3800;
+    private final String host = "http://api.absolutioncraft.net/";
+    private final Integer port = 3000;
     private final String suffix = "api";
 }
