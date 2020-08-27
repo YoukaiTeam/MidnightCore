@@ -94,6 +94,7 @@ public abstract class HttpRequest implements IHttpRequest {
                 default: break;
                 case 500: throw new InternalServerErrorException(jsonSerializer.errorContext(response));
                 case 404: throw new NotFoundException(jsonSerializer.errorContext(response));
+                case 503: throw new ServiceUnavailableException();
             }
         } else {
             throw new ServiceUnavailableException();
