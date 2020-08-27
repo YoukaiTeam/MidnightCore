@@ -15,11 +15,11 @@ import net.absolutioncraft.api.shared.user.model.IUser;
 public interface UserDataProvider {
     void cacheUserInstance(IUser userModel);
 
-    ListenableFuture<RestResponse<IUser>> getCachedUserByName(String username);
-    IUser getCachedUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException;
+    ListenableFuture<RestResponse<IUser>> getCachedUserByName(String username, boolean createData);
+    IUser getCachedUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException;
 
-    ListenableFuture<RestResponse<IUser>> getUserByName(String username);
-    IUser getUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException;
+    ListenableFuture<RestResponse<IUser>> getUserByName(String username, boolean createData);
+    IUser getUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException;
 
     IUser updateUserData(IUser user) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException;
 }

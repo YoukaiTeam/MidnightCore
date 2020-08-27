@@ -3,6 +3,7 @@ package net.absolutioncraft.api.bukkit.storage;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 
 import net.absolutioncraft.api.bukkit.storage.provider.UserDataProvider;
@@ -11,6 +12,7 @@ import net.absolutioncraft.api.shared.http.exception.NotFoundException;
 import net.absolutioncraft.api.shared.http.exception.ServiceUnavailableException;
 import net.absolutioncraft.api.shared.http.response.RestResponse;
 import net.absolutioncraft.api.shared.redis.RedisClient;
+import net.absolutioncraft.api.shared.serialization.JsonSerializer;
 import net.absolutioncraft.api.shared.serialization.model.user.UserDataDeserializer;
 import net.absolutioncraft.api.shared.user.GetUserDataRequest;
 import net.absolutioncraft.api.shared.user.UpdateUserDataRequest;
@@ -25,6 +27,7 @@ public final class UserDataStorage implements UserDataProvider {
     @Inject private ListeningExecutorService executorService;
     @Inject private RedisClient redisClient;
     @Inject private Gson gson;
+    @Inject private JsonSerializer jsonSerializer;
 
     @Inject private UserDataDeserializer userDataDeserializer;
 
@@ -39,10 +42,10 @@ public final class UserDataStorage implements UserDataProvider {
     }
 
     @Override
-    public ListenableFuture<RestResponse<IUser>> getCachedUserByName(String username) {
+    public ListenableFuture<RestResponse<IUser>> getCachedUserByName(String username, boolean createData) {
         return this.executorService.submit(() -> {
             try {
-                return new RestResponse<>(null, RestResponse.Status.SUCCESS, this.getCachedUserByNameSync(username));
+                return new RestResponse<>(null, RestResponse.Status.SUCCESS, this.getCachedUserByNameSync(username, createData));
             } catch (NotFoundException | InternalServerErrorException | ServiceUnavailableException exception) {
                 return new RestResponse<>(exception, RestResponse.Status.ERROR, null);
             }
@@ -50,19 +53,19 @@ public final class UserDataStorage implements UserDataProvider {
     }
 
     @Override
-    public IUser getCachedUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
+    public IUser getCachedUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
         if (this.redisClient.existsKey("user:" + username)) {
             return this.gson.fromJson(this.redisClient.getString("user:" + username), IUser.class);
         } else {
-            return getUserByNameSync(username);
+            return getUserByNameSync(username, createData);
         }
     }
 
     @Override
-    public ListenableFuture<RestResponse<IUser>> getUserByName(String username) {
+    public ListenableFuture<RestResponse<IUser>> getUserByName(String username, boolean createData) {
         return this.executorService.submit(() -> {
             try {
-                return new RestResponse<>(null, RestResponse.Status.SUCCESS, this.getUserByNameSync(username));
+                return new RestResponse<>(null, RestResponse.Status.SUCCESS, this.getUserByNameSync(username, createData));
             } catch (NotFoundException | InternalServerErrorException | ServiceUnavailableException exception) {
                 return new RestResponse<>(exception, RestResponse.Status.ERROR, null);
             }
@@ -70,9 +73,21 @@ public final class UserDataStorage implements UserDataProvider {
     }
 
     @Override
-    public IUser getUserByNameSync(String username) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        final IUser user = this.userDataDeserializer.deserialize(this.getUserDataRequest.executeRequest(username, true));
+    public IUser getUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
+        long startTime = System.nanoTime();
+        String response = this.getUserDataRequest.executeRequest(username, createData);
+        JsonObject parsedResponse = jsonSerializer.parseObject(response);
+        boolean exists = parsedResponse.get("exists").getAsBoolean();
+
+        if (!createData && !exists) {
+            throw new NotFoundException("User not found on database.");
+        }
+
+        final IUser user = this.userDataDeserializer.deserialize(parsedResponse.get("message").toString());
         cacheUserInstance(user);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Time took for #getUserByNameSync: " + duration);
         return user;
     }
 

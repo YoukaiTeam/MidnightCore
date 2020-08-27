@@ -8,6 +8,7 @@ import com.google.inject.Module;
 
 import net.absolutioncraft.api.bukkit.menu.example.ExampleMenuCommand;
 import net.absolutioncraft.api.bukkit.menu.listener.MenuInventoryListener;
+import net.absolutioncraft.api.bukkit.storage.UserStorageModule;
 import net.absolutioncraft.api.shared.SharedModule;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +28,7 @@ public final class BukkitAPI extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.setupInjection(new SharedModule());
+        this.setupInjection(new SharedModule(), new UserStorageModule());
         this.saveDefaultConfig();
 
         this.setupListeners(menuInventoryListener);
