@@ -27,7 +27,14 @@ public class RedisClient implements IRedisClient {
         if (this.pool == null) {
             this.pool = new JedisPool(this.config.getAddress(), this.config.getPort());
         }
+        this.ping();
         return pool;
+    }
+
+    public void ping() {
+        try (Jedis client = this.pool.getResource()) {
+            client.ping();
+        }
     }
 
     public void setString(String key, String value) {
