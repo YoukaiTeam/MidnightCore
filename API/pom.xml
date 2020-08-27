@@ -17,6 +17,7 @@
     <modules>
         <module>api-bukkit</module>
         <module>api-shared</module>
+        <module>api-bungee</module>
     </modules>
 
 
