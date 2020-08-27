@@ -24,9 +24,8 @@ public final class RequestBuilder {
     public URI getURI(final String url, final Map<String, String> params) {
         try {
             final URIBuilder uri = new URIBuilder()
-                    .setScheme("http")
+                    .setScheme("https")
                     .setHost(this.config.getHost())
-                    .setPort(this.config.getPort())
                     .setPath(this.config.getSuffix() + "/" + url);
             for (Map.Entry<String, String> entry: params.entrySet()) {
                 uri.setParameter(entry.getKey(), entry.getValue());
