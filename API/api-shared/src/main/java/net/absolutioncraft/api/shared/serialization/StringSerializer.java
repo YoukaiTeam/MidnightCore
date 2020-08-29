@@ -30,9 +30,8 @@ public final class StringSerializer {
         int threeMonths = 7776000;
         int rankTime = TimeSerializer.getUnixStamp(expiration) - TimeSerializer.getUnixStamp(set);
 
-        if (rankTime >= oneMonth && rankTime < twoMonths) return "❤";
-        if (rankTime >= twoMonths && rankTime < threeMonths) return "❤❤";
-        if (rankTime >= threeMonths) return "❤❤❤";
+        if (rankTime <= oneMonth) return "❤";
+        if (rankTime <= twoMonths) return "❤❤";
 
         return "❤❤❤";
     }
