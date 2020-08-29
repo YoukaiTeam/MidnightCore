@@ -16,4 +16,5 @@ public final class PlayerTag {
     private Team tagTeam;
 
     private String prefix;
+    private String suffix;
 }

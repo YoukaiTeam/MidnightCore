@@ -41,11 +41,13 @@ public final class ScoreboardHandler implements IScoreboardHandler {
     }
 
     @Override
-    public void removeBoard(@NotNull PlayerBoard playerBoard) {
-        playerBoard.disableGlow();
-        playerBoard.getObjective().unregister();
+    public void removeBoard(PlayerBoard playerBoard) {
+        if (playerBoard != null) {
+            playerBoard.disableGlow();
+            playerBoard.getObjective().unregister();
 
-        Bukkit.getLogger().log(Level.INFO, "[API] Scoreboard removed for: {0}",
-                new Object[]{ playerBoard.getScoreboard().getPlayers().iterator().next().getName() });
+            Bukkit.getLogger().log(Level.INFO, "[API] Scoreboard removed for: {0}",
+                    new Object[]{ playerBoard.getScoreboard().getPlayers().iterator().next().getName() });
+        }
     }
 }

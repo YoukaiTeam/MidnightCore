@@ -37,7 +37,7 @@ public final class TagHandler implements ITagHandler {
 
         final Scoreboard scoreboard = playerBoard.getScoreboard();
         final PlayerTag playerTag = tagStorage.hasTag(uuid) ? tagStorage.getPlayerTag(player.getUniqueId()) : tagStorage.addTag(player);
-        final String teamName = "TAG_" + random.nextInt(5);
+        final String teamName = "TAG_" + random.nextInt(99999);
 
         playerTag.setTagScoreboard(scoreboard);
         playerTag.setTagTeam(scoreboard.registerNewTeam(teamName));
@@ -52,12 +52,12 @@ public final class TagHandler implements ITagHandler {
             scoreboard.getTeam(onlinePlayerTag.getTagTeam().getName()).addEntry(onlinePlayer.getName());
         });
 
-        Bukkit.getLogger().log(Level.INFO, "[Mio-API] Tag set for: {0} ({1})",
+        Bukkit.getLogger().log(Level.INFO, "[API] Tag Prefix set for: {0} ({1})",
                 new Object[]{player.getName(), string});
     }
 
     @Override
-    public void setSuffix(@NotNull Player player, @NotNull String string) {
+    public void setSuffix(@NotNull Player player, @NotNull String string) throws PlayerBoardException {
 
     }
 
@@ -72,7 +72,7 @@ public final class TagHandler implements ITagHandler {
                 }
             });
 
-            Bukkit.getLogger().log(Level.INFO, "[Mio-API] Tag removed for: {0}",
+            Bukkit.getLogger().log(Level.INFO, "[API] Tag removed for: {0}",
                     new Object[]{ player.getName() });
         }
     }

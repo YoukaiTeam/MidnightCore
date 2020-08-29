@@ -9,6 +9,6 @@ import org.jetbrains.annotations.NotNull;
  * @since 1.0.0
  */
 public interface IScoreboardHandler {
-    void handleBoard(@NotNull Player player, @NotNull PlayerBoard playerBoard);
-    void removeBoard(@NotNull PlayerBoard playerBoard);
+    void handleBoard(@NotNull Player player, PlayerBoard playerBoard);
+    void removeBoard(PlayerBoard playerBoard);
 }
