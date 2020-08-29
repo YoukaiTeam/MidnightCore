@@ -1,0 +1,4 @@
+name: MidnightCore-API-Bungee
+main: net.absolutioncraft.api.bungee.BungeeAPI
+version: ${project.version}-${git.commit.id.abbrev}
+author: MelonDev
