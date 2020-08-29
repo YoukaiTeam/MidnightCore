@@ -38,6 +38,11 @@ public final class UpdateUserDataRequest extends HttpRequest {
         return "user/update-server/" + this.username;
     }
 
+    @Override
+    public String getJSONParams() {
+        return data;
+    }
+
     public String executeRequest(String username, IUser dataSupplier) throws ServiceUnavailableException, InternalServerErrorException, NotFoundException {
         this.username = username;
         this.data = this.gson.toJson(dataSupplier, User.class);
