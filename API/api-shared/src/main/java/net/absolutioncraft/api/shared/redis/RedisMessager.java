@@ -81,7 +81,7 @@ public class RedisMessager implements Messager {
         lock.lock();
 
         try {
-            if(jedis == null){
+            if (jedis == null) {
                 jedis = new Jedis(configuration.getAddress(), configuration.getPort());
             }
 
