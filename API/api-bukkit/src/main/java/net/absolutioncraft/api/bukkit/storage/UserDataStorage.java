@@ -17,6 +17,7 @@ import net.absolutioncraft.api.shared.serialization.model.user.UserDataDeseriali
 import net.absolutioncraft.api.shared.user.GetUserDataRequest;
 import net.absolutioncraft.api.shared.user.UpdateUserDataRequest;
 import net.absolutioncraft.api.shared.user.model.IUser;
+import net.absolutioncraft.api.shared.user.model.User;
 
 /**
  * @author MelonDev
@@ -54,8 +55,8 @@ public final class UserDataStorage implements UserDataProvider {
 
     @Override
     public IUser getCachedUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        if (this.redisClient.existsKey("user:" + username)) {
-            return this.gson.fromJson(this.redisClient.getString("user:" + username), IUser.class);
+        if (this.redisClient.existsKey("user:" + username.toLowerCase())) {
+            return this.gson.fromJson(this.redisClient.getString("user:" + username.toLowerCase()), User.class);
         } else {
             return getUserByNameSync(username, createData);
         }
