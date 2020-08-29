@@ -23,6 +23,8 @@ public final class User implements IUser {
     @SerializedName("email") private @Nullable String email;
 
     @SerializedName("userRank") private UserRank userRank;
+    @SerializedName("setRankTime") private Integer setRankTime;
+    @SerializedName("rankExpiration") private Integer rankExpiration;
 
     @SerializedName("lastSeen") private long lastSeen;
     @SerializedName("lastGame") private @NotNull String lastGame;
@@ -65,6 +67,26 @@ public final class User implements IUser {
     @Override
     public void setUserRank(@NotNull String groupIdentifier) {
         this.userRank = UserRank.valueOf(groupIdentifier);
+    }
+
+    @Override
+    public @NotNull Integer getSetRankTime() {
+        return setRankTime;
+    }
+
+    @Override
+    public void setSetRankTime(@NotNull Integer unixTime) {
+
+    }
+
+    @Override
+    public @NotNull Integer getRankExpiration() {
+        return rankExpiration;
+    }
+
+    @Override
+    public void setRankExpiration(@NotNull Integer unixTime) {
+
     }
 
     @Override

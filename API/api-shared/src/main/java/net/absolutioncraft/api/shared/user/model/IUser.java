@@ -19,6 +19,10 @@ public interface IUser {
 
     @NotNull UserRank getUserRank();
     void setUserRank(@NotNull String groupIdentifier);
+    @NotNull Integer getSetRankTime();
+    void setSetRankTime(@NotNull Integer unixTime);
+    @NotNull Integer getRankExpiration();
+    void setRankExpiration(@NotNull Integer unixTime);
 
     @NotNull Integer getLastSeen();
     @NotNull String getLastGame();
