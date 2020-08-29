@@ -6,8 +6,10 @@ import net.absolutioncraft.api.bukkit.binder.BinderModule;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
-import net.absolutioncraft.api.bukkit.menu.example.ExampleMenuCommand;
+import net.absolutioncraft.api.bukkit.command.CommandModule;
+import net.absolutioncraft.api.bukkit.command.listener.CommandListener;
 import net.absolutioncraft.api.bukkit.menu.listener.MenuInventoryListener;
+import net.absolutioncraft.api.bukkit.rank.RankExpirationModule;
 import net.absolutioncraft.api.bukkit.storage.UserStorageModule;
 import net.absolutioncraft.api.shared.SharedModule;
 import org.bukkit.event.Listener;
@@ -24,14 +26,18 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class BukkitAPI extends JavaPlugin {
     @Inject private MenuInventoryListener menuInventoryListener;
-    @Inject private ExampleMenuCommand exampleMenuCommand;
+    @Inject private CommandListener commandListener;
 
     @Override
     public void onEnable() {
-        this.setupInjection(new SharedModule(), new UserStorageModule());
+        this.setupInjection(new SharedModule(),
+                            new UserStorageModule(),
+                            new CommandModule(),
+                            new RankExpirationModule());
+
         this.saveDefaultConfig();
 
-        this.setupListeners(menuInventoryListener);
+        this.setupListeners(menuInventoryListener, commandListener);
     }
 
     private void setupListeners(final Listener... listeners) {
