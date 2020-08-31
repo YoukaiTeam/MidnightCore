@@ -2,6 +2,7 @@ package net.absolutioncraft.api.shared.serialization;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -53,7 +54,7 @@ public final class TimeSerializer {
                 if (TIME_UNITS.containsKey(character + "") && (number.length() > 0)) {
                     long parsedLong = Long.parseLong(number.toString());
                     ChronoUnit unit = TIME_UNITS.get(character + "");
-                    sum += unit.getDuration().multipliedBy(parsedLong).toMillis();
+                    sum += (Instant.now().getEpochSecond() + (unit.getDuration().multipliedBy(parsedLong).toMillis() / 1000));
                     number = new StringBuilder();
                 }
             }

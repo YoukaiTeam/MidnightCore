@@ -1,0 +1,5 @@
+name: MidnightCore-Commons-Bungee
+main: net.absolutioncraft.commons.bungee.CommonsBungee
+version: ${project.version}-${git.commit.id.abbrev}
+#depend: [MidnightCore-API-Bungee]
+author: MelonDev

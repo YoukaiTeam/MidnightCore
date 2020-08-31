@@ -10,9 +10,7 @@ import net.absolutioncraft.api.shared.redis.channel.listener.ChannelListener;
 public interface Channel<O> {
     String getName();
 
-    TypeToken<O> getType();
+    void sendMessage(String string);
 
-    void sendMessage(O object);
-
-    void registerListener(ChannelListener<O> listener);
+    void registerListener(ChannelListener listener);
 }

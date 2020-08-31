@@ -2,4 +2,4 @@ name: Lobby
 main: net.absolutioncraft.lobby.Lobby
 version: ${project.version}-${git.commit.id.abbrev}
 depend: [MidnightCore-Commons-Bukkit, MidnightCore-API-Bukkit]
-author: MelonDev, GatitoUwU
+author: MelonDev

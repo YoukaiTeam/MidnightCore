@@ -1,8 +1,5 @@
 package net.absolutioncraft.api.shared.redis;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -11,6 +8,7 @@ import net.absolutioncraft.api.shared.redis.config.RedisClientConfiguration;
 import net.absolutioncraft.api.shared.redis.messager.Messager;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,50 +25,37 @@ public class RedisMessager implements Messager {
 
     private Lock lock;
 
-    private Map<String, TypeToken> registeredTypes;
-    private Map<String, Channel> registeredChannels;
+    private static Map<String, Channel> registeredChannels = new HashMap<>();
 
     private RedisClientConfiguration configuration;
 
     private Jedis jedis;
-
-    private Gson gson;
+    private JedisPool jedisPool;
 
     private ExecutorService executorService;
 
     @Inject
-    RedisMessager(RedisClientConfiguration configuration, Gson gson, ExecutorService executorService) {
+    RedisMessager(RedisClientConfiguration configuration, ExecutorService executorService) {
         this.lock = new ReentrantLock();
 
-        registeredChannels = new HashMap<>();
-        registeredTypes = new HashMap<>();
-
         this.configuration = configuration;
-
-        this.gson = gson;
 
         this.executorService = executorService;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <O> Channel<O> getChannel(String name, TypeToken<O> type) {
+    public <O> Channel<O> getChannel(String name) {
         try {
             lock.lock();
 
             if (registeredChannels.containsKey(name)) {
-                if (registeredTypes.get(name) != type) {
-                    throw new IllegalStateException("A channel with the name " + name + " is already registered with another type, type: " + registeredTypes.get(name).getType().getTypeName());
-                }
-
                 return registeredChannels.get(name);
             }
 
-            Channel<O> channel = new RedisChannel<>(name, type, this::getConnection, gson, executorService);
+            Channel<O> channel = new RedisChannel<>(name, this::getConnection, this::getPool, executorService);
 
             registeredChannels.put(name, channel);
-            registeredTypes.put(name, type);
-
             return channel;
         } finally {
             lock.unlock();
@@ -89,5 +74,12 @@ public class RedisMessager implements Messager {
         } finally {
             lock.unlock();
         }
+    }
+
+    JedisPool getPool() {
+        if (this.jedisPool == null) {
+            this.jedisPool = new JedisPool(this.configuration.getAddress(), this.configuration.getPort());
+        }
+        return jedisPool;
     }
 }

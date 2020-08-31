@@ -25,6 +25,7 @@
             <groupId>net.absolutioncraft</groupId>
             <artifactId>api-bukkit</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

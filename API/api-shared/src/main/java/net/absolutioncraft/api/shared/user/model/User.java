@@ -26,6 +26,8 @@ public final class User implements IUser {
     @SerializedName("setRankTime") private Integer setRankTime;
     @SerializedName("rankExpiration") private Integer rankExpiration;
 
+    @SerializedName("heartsColor") private String heartsColor;
+
     @SerializedName("lastSeen") private long lastSeen;
     @SerializedName("lastGame") private @NotNull String lastGame;
     @SerializedName("memberSince") private long memberSince;
@@ -76,7 +78,7 @@ public final class User implements IUser {
 
     @Override
     public void setSetRankTime(@NotNull Integer unixTime) {
-
+        this.setRankTime = unixTime;
     }
 
     @Override
@@ -86,7 +88,17 @@ public final class User implements IUser {
 
     @Override
     public void setRankExpiration(@NotNull Integer unixTime) {
+        this.rankExpiration = unixTime;
+    }
 
+    @Override
+    public @NotNull String getHeartsColor() {
+        return heartsColor;
+    }
+
+    @Override
+    public void setHeartsColor(String string) {
+        this.heartsColor = string;
     }
 
     @Override

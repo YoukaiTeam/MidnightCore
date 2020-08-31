@@ -13,7 +13,7 @@ import java.util.Set;
  * @author MelonDev
  * @since 1.0.0
  */
-public class RedisClient implements IRedisClient {
+public final class RedisClient implements IRedisClient {
 
     private final RedisClientConfiguration config;
     private JedisPool pool;
@@ -103,6 +103,12 @@ public class RedisClient implements IRedisClient {
     public Boolean existsKey(String key) {
         try (Jedis client = getPool().getResource()) {
             return client.exists(key);
+        }
+    }
+
+    public Boolean existsMember(String key, String member) {
+        try (Jedis client = getPool().getResource()) {
+            return client.sismember(key, member);
         }
     }
 

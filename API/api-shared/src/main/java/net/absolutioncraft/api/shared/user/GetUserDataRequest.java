@@ -16,7 +16,6 @@ import java.util.Map;
 public final class GetUserDataRequest extends HttpRequest {
     private HashMap<String, String> headers = new HashMap<>();
     private String username;
-    private boolean createData;
 
     @Override
     public Map<String, String> getHeaders() {
@@ -32,14 +31,9 @@ public final class GetUserDataRequest extends HttpRequest {
         return "user/get/" + this.username;
     }
 
-    @Override
-    public String getJSONParams() {
-        return String.valueOf(createData);
-    }
-
     public String executeRequest(String username, boolean createData) throws ServiceUnavailableException, InternalServerErrorException, NotFoundException {
         this.username = username;
-        this.createData = createData;
+        headers.put("createData", Boolean.toString(createData));
         return getResponse();
     }
 }

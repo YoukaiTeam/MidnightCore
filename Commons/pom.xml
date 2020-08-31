@@ -15,5 +15,6 @@
     <version>0.0.1</version>
     <modules>
         <module>commons-bukkit</module>
+        <module>commons-bungee</module>
     </modules>
 </project>

@@ -27,8 +27,8 @@ public final class RankExpirationChecker implements RankExpirer {
     public void checkExpiration(IUser user) {
         int nowEpoch = Math.toIntExact(Instant.now().getEpochSecond());
         int expirationEpoch = user.getRankExpiration();
-        int result = (expirationEpoch - nowEpoch);
-        if (result <= 0) {
+        if (expirationEpoch == -1 || expirationEpoch == 0) return;
+        if (nowEpoch > expirationEpoch) {
             defaultRank(user);
         }
     }

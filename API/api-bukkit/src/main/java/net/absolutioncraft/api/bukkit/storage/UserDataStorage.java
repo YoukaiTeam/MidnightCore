@@ -75,7 +75,7 @@ public final class UserDataStorage implements UserDataProvider {
 
     @Override
     public IUser getUserByNameSync(String username, boolean createData) throws NotFoundException, InternalServerErrorException, ServiceUnavailableException {
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(); // Debug
         String response = this.getUserDataRequest.executeRequest(username, createData);
         JsonObject parsedResponse = jsonSerializer.parseObject(response);
         boolean exists = parsedResponse.get("exists").getAsBoolean();
@@ -86,9 +86,9 @@ public final class UserDataStorage implements UserDataProvider {
 
         final IUser user = this.userDataDeserializer.deserialize(parsedResponse.get("message").toString());
         cacheUserInstance(user);
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("Time took for #getUserByNameSync: " + duration);
+        long endTime = System.nanoTime(); // Debug
+        long duration = (endTime - startTime); // Debug
+        System.out.println("Time took for #getUserByNameSync: " + duration); // Debug
         return user;
     }
 

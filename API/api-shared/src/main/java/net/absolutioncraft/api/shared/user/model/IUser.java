@@ -24,6 +24,9 @@ public interface IUser {
     @NotNull Integer getRankExpiration();
     void setRankExpiration(@NotNull Integer unixTime);
 
+    @NotNull String getHeartsColor();
+    void setHeartsColor(String string);
+
     @NotNull Integer getLastSeen();
     @NotNull String getLastGame();
     @NotNull Integer getMemberSince();

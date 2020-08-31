@@ -1,6 +1,6 @@
 package net.absolutioncraft.api.shared.serialization;
 
-import java.util.Date;
+import net.absolutioncraft.api.shared.user.model.IUser;
 
 /**
  * <h1>String Serializer</h1>
@@ -24,15 +24,14 @@ public final class StringSerializer {
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
     }
 
-    public static String getSupporterHearts(Date set, Date expiration) {
+    public static String getSupporterHearts(IUser user) {
         int oneMonth = 2592000;
         int twoMonths = 5184000;
-        int threeMonths = 7776000;
-        int rankTime = TimeSerializer.getUnixStamp(expiration) - TimeSerializer.getUnixStamp(set);
+        int rankTime = user.getRankExpiration() - user.getSetRankTime();
 
-        if (rankTime <= oneMonth) return "❤";
-        if (rankTime <= twoMonths) return "❤❤";
+        if (rankTime <= oneMonth) return "§a[§" + user.getHeartsColor() + "❤§a] ";
+        if (rankTime <= twoMonths) return "§a[§" + user.getHeartsColor() + "❤❤§a] ";
 
-        return "❤❤❤";
+        return "§a[§" + user.getHeartsColor() + "❤❤❤§a] ";
     }
 }

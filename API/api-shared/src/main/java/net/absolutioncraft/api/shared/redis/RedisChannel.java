@@ -1,16 +1,15 @@
 package net.absolutioncraft.api.shared.redis;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import net.absolutioncraft.api.shared.redis.channel.Channel;
 import net.absolutioncraft.api.shared.redis.channel.listener.ChannelListener;
+import net.absolutioncraft.api.shared.redis.event.RedisMessageEvent;
+import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
-import java.util.Deque;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
 
@@ -20,47 +19,31 @@ import java.util.function.Supplier;
  */
 public class RedisChannel<O> implements Channel<O> {
     private String name;
-    private TypeToken<O> type;
 
-    private TypeToken<RedisWrapper<O>> wrappedType;
-
-    private Supplier<Jedis> jedisSupplier;
+    private Supplier<Jedis> subscriberJedis;
+    private Supplier<JedisPool> publisherRedis;
     private JedisPubSub pubSub;
 
-    private Gson gson;
+    private List<ChannelListener> channelListeners = new ArrayList<>();
 
-    private Deque<ChannelListener<O>> channelListeners;
-
-    private String serverChannelId = UUID.randomUUID().toString();
-
-    RedisChannel(String name, TypeToken<O> type, Supplier<Jedis> redis, Gson gson, ExecutorService executorService) {
+    RedisChannel(String name, Supplier<Jedis> subscriberJedis, Supplier<JedisPool> publisherRedis, ExecutorService executorService) {
         this.name = name;
-        this.type = type;
 
-        jedisSupplier = redis;
-
-        this.gson = gson;
+        this.subscriberJedis = subscriberJedis;
+        this.publisherRedis = publisherRedis;
 
         pubSub = new JedisPubSub() {
             @Override
             public void onMessage(String channel, String message) {
-                final RedisWrapper<O> wrapper = gson.fromJson(message, new TypeToken<RedisWrapper<O>>(){}.getType());
-                final String id = wrapper.getId();
-
-                if (id.equals(serverChannelId)) return;
-
-                final O object = wrapper.getObject();
-
-                channelListeners.forEach(listener -> listener.receiveMessage(object));
+                Bukkit.getServer().getPluginManager().callEvent(new RedisMessageEvent(message));
+                /*channelListeners.forEach(listener -> {
+                    //listener.receiveMessage(message);
+                    System.out.println("Listeners ejecutados: " + listener.toString());
+                });*/
             }
         };
 
-        executorService.submit(() -> jedisSupplier.get().subscribe(pubSub, name));
-
-        channelListeners = new ConcurrentLinkedDeque<>();
-
-        wrappedType = new TypeToken<RedisWrapper<O>>() {
-        };
+        executorService.submit(() -> subscriberJedis.get().subscribe(pubSub, name));
     }
 
     @Override
@@ -69,21 +52,15 @@ public class RedisChannel<O> implements Channel<O> {
     }
 
     @Override
-    public TypeToken<O> getType() {
-        return type;
+    public void sendMessage(String string) {
+        try (Jedis jedis = publisherRedis.get().getResource()) {
+            jedis.publish(name, string);
+        }
     }
 
     @Override
-    public void sendMessage(O object) {
-        RedisWrapper<O> wrapper = new RedisWrapper<>(serverChannelId, object);
-
-        String jsonRepresentation = gson.toJson(wrapper, wrappedType.getType());
-
-        jedisSupplier.get().publish(name, jsonRepresentation);
-    }
-
-    @Override
-    public void registerListener(ChannelListener<O> listener) {
+    public void registerListener(ChannelListener listener) {
+        System.out.println("Listener registrado: " + listener);
         channelListeners.add(listener);
     }
 }

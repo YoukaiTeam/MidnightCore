@@ -14,7 +14,7 @@ import redis.clients.jedis.Jedis;
 public final class ServerOnlineStorage implements OnlineProvider {
     @Inject private RedisClient redisClient;
 
-    private static final String LOCATION = "online.users";
+    private static final String LOCATION = "online-players:connected";
 
     @Override
     public boolean isUserOnline(String username) {
@@ -26,7 +26,7 @@ public final class ServerOnlineStorage implements OnlineProvider {
     @Override
     public long getOnlinePlayers() {
         try (Jedis jedis = redisClient.getPool().getResource()) {
-            return jedis.llen(LOCATION);
+            return jedis.scard(LOCATION).intValue();
         }
     }
 

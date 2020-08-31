@@ -3,6 +3,7 @@ package net.absolutioncraft.api.bukkit.storage;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
+import net.absolutioncraft.api.bukkit.storage.checker.DataChecker;
 import net.absolutioncraft.api.bukkit.storage.provider.UserDataProvider;
 
 /**
@@ -16,5 +17,6 @@ public final class UserStorageModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(UserDataProvider.class).to(UserDataStorage.class).in(Scopes.SINGLETON);
+        bind(DataChecker.class).to(UserDataChecker.class).in(Scopes.SINGLETON);
     }
 }
