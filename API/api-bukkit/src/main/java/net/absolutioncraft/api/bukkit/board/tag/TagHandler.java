@@ -2,8 +2,8 @@ package net.absolutioncraft.api.bukkit.board.tag;
 
 import com.google.inject.Inject;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
-import net.absolutioncraft.api.bukkit.board.PlayerTag;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerTag;
 import net.absolutioncraft.api.bukkit.board.exception.PlayerBoardException;
 import net.absolutioncraft.api.bukkit.board.storage.ScoreboardViewerStorage;
 import net.absolutioncraft.api.bukkit.board.storage.TagStorage;
@@ -47,9 +47,19 @@ public final class TagHandler implements ITagHandler {
         scoreboard.getTeam(playerTag.getTagTeam().getName()).addEntry(player.getName());
 
         Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+            if (onlinePlayer.getName().equals(player.getName())) return;
+
+            // TODO 6/9/20: Fix this mess.
             final PlayerTag onlinePlayerTag = tagStorage.getPlayerTag(onlinePlayer.getUniqueId());
-            onlinePlayerTag.getTagScoreboard().getTeam(onlinePlayerTag.getTagTeam().getName()).addEntry(player.getName());
+            scoreboard.registerNewTeam(onlinePlayerTag.getTagTeam().getName());
+            scoreboard.getTeam(onlinePlayerTag.getTagTeam().getName()).setPrefix(onlinePlayerTag.getPrefix());
             scoreboard.getTeam(onlinePlayerTag.getTagTeam().getName()).addEntry(onlinePlayer.getName());
+
+            onlinePlayerTag.getTagScoreboard().getTeam(onlinePlayerTag.getTagTeam().getName()).addEntry(player.getName());
+
+            onlinePlayerTag.getTagScoreboard().registerNewTeam(playerTag.getTagTeam().getName());
+            onlinePlayerTag.getTagScoreboard().getTeam(playerTag.getTagTeam().getName()).setPrefix(playerTag.getPrefix());
+            onlinePlayerTag.getTagScoreboard().getTeam(playerTag.getTagTeam().getName()).addEntry(player.getName());
         });
 
         Bukkit.getLogger().log(Level.INFO, "[API] Tag Prefix set for: {0} ({1})",

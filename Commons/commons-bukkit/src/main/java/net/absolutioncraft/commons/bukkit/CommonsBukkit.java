@@ -11,7 +11,7 @@ import net.absolutioncraft.api.bukkit.storage.UserStorageModule;
 import net.absolutioncraft.api.shared.SharedModule;
 import net.absolutioncraft.commons.bukkit.binder.BinderModule;
 import net.absolutioncraft.commons.bukkit.listener.UserRankListener;
-import net.absolutioncraft.commons.bukkit.rank.listener.RankListener;
+import net.absolutioncraft.commons.bukkit.listener.RankRequestListener;
 import net.absolutioncraft.commons.bukkit.rank.RankModule;
 import net.absolutioncraft.commons.bukkit.rank.command.SetRankCommand;
 import net.absolutioncraft.commons.bukkit.user.UserJoinListener;
@@ -25,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class CommonsBukkit extends JavaPlugin {
     @Inject private UserJoinListener userJoinListener;
     @Inject private UserRankListener userRankListener;
-    @Inject private RankListener rankListener;
+    @Inject private RankRequestListener rankRequestListener;
 
     @Inject private CommandRegistry commandRegistry;
     @Inject private SetRankCommand setRankCommand;
@@ -40,7 +40,7 @@ public final class CommonsBukkit extends JavaPlugin {
                             );
 
         commandRegistry.registerCommand(setRankCommand);
-        this.setupListeners(rankListener, userJoinListener, userRankListener);
+        this.setupListeners(rankRequestListener, userJoinListener, userRankListener);
     }
 
     private void setupListeners(final Listener... listeners) {

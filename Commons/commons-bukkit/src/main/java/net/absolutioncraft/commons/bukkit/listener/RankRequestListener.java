@@ -1,4 +1,4 @@
-package net.absolutioncraft.commons.bukkit.rank.listener;
+package net.absolutioncraft.commons.bukkit.listener;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,7 +30,7 @@ import java.util.logging.Level;
  * @author MelonDev
  * @since 1.0.0
  */
-public final class RankListener implements Listener {
+public final class RankRequestListener implements Listener {
     @Inject private CommonsBukkit commonsBukkit;
     @Inject private UserDataProvider userDataProvider;
     @Inject private UserDataDeserializer userDataDeserializer;

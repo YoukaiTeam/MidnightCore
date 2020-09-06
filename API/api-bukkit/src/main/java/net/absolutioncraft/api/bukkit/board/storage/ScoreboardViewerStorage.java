@@ -2,7 +2,7 @@ package net.absolutioncraft.api.bukkit.board.storage;
 
 import com.google.inject.Inject;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 import net.absolutioncraft.api.bukkit.board.registry.ViewerRegistry;
 import net.absolutioncraft.api.bukkit.board.scoreboard.ScoreboardHandler;
 

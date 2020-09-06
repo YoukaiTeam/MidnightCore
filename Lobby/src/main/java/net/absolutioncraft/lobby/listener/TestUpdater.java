@@ -1,6 +1,6 @@
 package net.absolutioncraft.lobby.listener;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 import net.absolutioncraft.api.bukkit.board.updater.AbstractScoreboardSlotUpdater;
 
 /**

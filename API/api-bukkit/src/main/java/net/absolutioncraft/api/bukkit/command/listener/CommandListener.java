@@ -23,6 +23,9 @@ public final class CommandListener implements Listener {
     @Inject private CommandRegistry commandRegistry;
     @Inject private UserDataProvider userDataProvider;
 
+    private final static String ERR_NO_PERMISSION = "§c¡No estás autorizado para hacer eso!";
+    private final static String ERR_INTERNAL = "§cHa ocurrido un error inesperado al ejecutar ese comando. Contacta con la administración si el problema persiste.\n§7Código de error: #%s";
+
     @EventHandler
     public void commandResponse(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
@@ -54,11 +57,10 @@ public final class CommandListener implements Listener {
                 } else if (Arrays.asList(command.getSecondaryRanks()).contains(user.getUserRank())) {
                     command.executeCommand(player, finalArguments);
                 } else {
-                    // No perms
-                    player.sendMessage("sin permisos we");
+                    player.sendMessage(ERR_NO_PERMISSION);
                 }
             } else {
-                player.sendMessage("el core se rompio de nuevo we");
+                player.sendMessage(String.format(ERR_INTERNAL, response.getThrowedException().statusCode()));
             }
         });
     }

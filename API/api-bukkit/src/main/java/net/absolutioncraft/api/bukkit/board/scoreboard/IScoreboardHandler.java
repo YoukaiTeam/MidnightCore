@@ -1,6 +1,6 @@
 package net.absolutioncraft.api.bukkit.board.scoreboard;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

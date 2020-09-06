@@ -1,6 +1,6 @@
 package net.absolutioncraft.api.bukkit.board.registry;
 
-import net.absolutioncraft.api.bukkit.board.PlayerTag;
+import net.absolutioncraft.api.bukkit.board.player.PlayerTag;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

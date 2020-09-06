@@ -4,13 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import net.absolutioncraft.api.shared.rank.UserRank;
 import net.absolutioncraft.api.shared.user.model.IUser;
-import net.absolutioncraft.commons.bukkit.rank.listener.RankListener;
+import net.absolutioncraft.commons.bukkit.listener.RankRequestListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
  * This event will be called only when
- * the {@link RankListener} handles some
+ * the {@link RankRequestListener} handles some
  * rank change and the destination user
  * is online.
  *

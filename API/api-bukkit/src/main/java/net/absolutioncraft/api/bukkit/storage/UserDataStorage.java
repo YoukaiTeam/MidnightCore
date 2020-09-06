@@ -39,7 +39,7 @@ public final class UserDataStorage implements UserDataProvider {
     public void cacheUserInstance(IUser userModel) {
         final String username = userModel.getUsername();
         this.redisClient.setString("user:" + username, gson.toJson(userModel));
-        this.redisClient.setExpiration("user:" + username, 300);
+        this.redisClient.setExpiration("user:" + username, 500);
     }
 
     @Override

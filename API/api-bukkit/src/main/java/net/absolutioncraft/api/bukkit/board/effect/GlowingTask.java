@@ -1,6 +1,6 @@
 package net.absolutioncraft.api.bukkit.board.effect;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Objective;

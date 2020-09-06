@@ -15,7 +15,7 @@ import com.google.inject.Inject;
  * @since 0.0.1
  */
 @SuppressWarnings("deprecation")
-public class JsonSerializer {
+public final class JsonSerializer {
 
     private JsonParser parser;
     private Gson gson;

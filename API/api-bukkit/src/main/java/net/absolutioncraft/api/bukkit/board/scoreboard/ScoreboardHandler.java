@@ -1,6 +1,6 @@
 package net.absolutioncraft.api.bukkit.board.scoreboard;
 
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 import net.absolutioncraft.api.bukkit.board.util.StringSplitter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

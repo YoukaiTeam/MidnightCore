@@ -1,4 +1,4 @@
-package net.absolutioncraft.api.bukkit.board;
+package net.absolutioncraft.api.bukkit.board.player;
 
 import lombok.Getter;
 import lombok.Setter;

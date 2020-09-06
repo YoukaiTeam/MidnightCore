@@ -1,7 +1,7 @@
 package net.absolutioncraft.api.bukkit.board.updater;
 
 import lombok.*;
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 
 /**
  * @author MelonDev

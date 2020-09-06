@@ -1,7 +1,7 @@
 package net.absolutioncraft.lobby.listener;
 
 import com.google.inject.Inject;
-import net.absolutioncraft.api.bukkit.board.PlayerBoard;
+import net.absolutioncraft.api.bukkit.board.player.PlayerBoard;
 import net.absolutioncraft.api.bukkit.board.exception.PlayerBoardException;
 import net.absolutioncraft.api.bukkit.board.scoreboard.ScoreboardHandler;
 import net.absolutioncraft.api.bukkit.board.storage.ScoreboardViewerStorage;

@@ -36,7 +36,7 @@ public final class SetRankCommand extends AbstractMidnightCommand {
     private final static String DATA_UPDATE_FAIL = "§cHa ocurrido un error al actualizar los datos en la nube. #%s";
 
     public SetRankCommand() {
-        super("setrank", UserRank.USER, new UserRank[0], "changerank");
+        super("setrank", UserRank.OWNER, new UserRank[] { UserRank.ADMIN }, "changerank");
     }
 
     @Override
