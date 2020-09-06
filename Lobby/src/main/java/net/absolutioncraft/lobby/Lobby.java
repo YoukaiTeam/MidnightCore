@@ -8,8 +8,10 @@ import net.absolutioncraft.api.bukkit.storage.UserStorageModule;
 import net.absolutioncraft.api.shared.SharedModule;
 import net.absolutioncraft.lobby.binder.BinderModule;
 
-import net.absolutioncraft.lobby.listener.TestListener;
-import org.bukkit.event.EventHandler;
+import net.absolutioncraft.lobby.board.LobbyBoardModule;
+import net.absolutioncraft.lobby.listener.AsyncPlayerChatListener;
+import net.absolutioncraft.lobby.listener.UserLoadListener;
+import net.absolutioncraft.lobby.listener.UserRankChangeListener;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,12 +20,18 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 0.0.1
  */
 public final class Lobby extends JavaPlugin {
-    @Inject private TestListener testListener;
+    @Inject private UserLoadListener userLoadListener;
+    @Inject private AsyncPlayerChatListener asyncPlayerChatListener;
+    @Inject private UserRankChangeListener userRankChangeListener;
 
     @Override
     public void onEnable() {
-        this.setupInjection(new SharedModule(), new UserStorageModule()); // Add guice modules here
-        this.setupListeners(testListener); // same
+        this.setupInjection(new SharedModule(),
+                            new UserStorageModule(),
+
+                            new LobbyBoardModule());
+
+        this.setupListeners(userLoadListener, asyncPlayerChatListener, userRankChangeListener);
     }
 
 
