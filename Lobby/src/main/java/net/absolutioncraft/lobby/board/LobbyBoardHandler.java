@@ -13,10 +13,11 @@ import net.absolutioncraft.api.shared.serialization.StringSerializer;
 import net.absolutioncraft.api.shared.user.model.IUser;
 import net.absolutioncraft.lobby.Lobby;
 import net.absolutioncraft.lobby.board.helper.LobbyBoardHelper;
-import net.absolutioncraft.lobby.board.updater.BoardUpdater;
+import net.absolutioncraft.lobby.board.updater.SimpleBoardUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -38,10 +39,19 @@ public final class LobbyBoardHandler implements LobbyBoardHelper {
 
         PlayerBoard playerBoard = scoreboardViewerStorage.getPlayerBoard(player);
         // Connected players updater
-        BoardUpdater boardUpdater = new BoardUpdater(playerBoard, 0, "");
-        Bukkit.getScheduler().runTaskTimerAsynchronously(lobby, () -> boardUpdater.update(2, "Jug. conectados: &b" + onlineProvider.getOnlinePlayers()), 0L, 20L);
+        SimpleBoardUpdater simpleBoardUpdater = new SimpleBoardUpdater(playerBoard, 0, "");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(lobby, () -> simpleBoardUpdater.update(lobby.getConfig().getInt("scoreboard.onlineUpdateLine"), "Jug. conectados: &b" + onlineProvider.getOnlinePlayers()), 0L, 20L);
 
-        playerBoard.setSlot(1, "test");
+        List<String> lines = lobby.getConfig().getStringList("scoreboard.lineList");
+        int size = lines.size() + 1;
+        for (String lineText : lines) {
+            size--;
+
+            String textFormatted = lineText.replace("%rank%", user.getUserRank().getColor() + StringSerializer.capitalizeString(user.getUserRank().name().toLowerCase()))
+                                           .replace("%hub%", lobby.getConfig().getInt("lobbyId") + "");
+            playerBoard.setSlot(size, textFormatted);
+        }
+
         playerBoard.setTitle("ABSOLUTION");
         playerBoard.enableGlow(lobby);
     }

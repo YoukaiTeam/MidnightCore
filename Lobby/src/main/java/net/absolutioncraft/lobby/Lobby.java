@@ -31,6 +31,7 @@ public final class Lobby extends JavaPlugin {
 
                             new LobbyBoardModule());
 
+        this.saveDefaultConfig();
         this.setupListeners(userLoadListener, asyncPlayerChatListener, userRankChangeListener);
     }
 

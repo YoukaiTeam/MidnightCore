@@ -7,8 +7,8 @@ import net.absolutioncraft.api.bukkit.board.updater.AbstractScoreboardSlotUpdate
  * @author MelonDev
  * @since 1.0.0
  */
-public final class BoardUpdater extends AbstractScoreboardSlotUpdater {
-    public BoardUpdater(PlayerBoard playerBoard, int slotId, String text) {
+public final class SimpleBoardUpdater extends AbstractScoreboardSlotUpdater {
+    public SimpleBoardUpdater(PlayerBoard playerBoard, int slotId, String text) {
         super(playerBoard, slotId, text);
     }
 

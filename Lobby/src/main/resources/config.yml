@@ -1,0 +1,12 @@
+lobbyId: 1
+scoreboard:
+  onlineUpdateLine: 5
+
+  lineList:
+    - ' '
+    - '&fRango: %rank%'
+    - '  '
+    - '&fLobby: &b#%hub%:'
+    - '&fJug. conectados: '
+    - '   '
+    - '&amc.absolutioncraft.net'
