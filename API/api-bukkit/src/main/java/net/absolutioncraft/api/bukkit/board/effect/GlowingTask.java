@@ -29,23 +29,21 @@ public final class GlowingTask implements Runnable {
     public void run() {
         if (this.counter < this.title.length()) {
             final String whitePart = ChatColor.WHITE + "" + ChatColor.BOLD + this.title.substring(0, this.counter);
-            final String yellowPart = ChatColor.YELLOW + "" + ChatColor.BOLD + this.title.charAt(this.counter);
-            final String orangePart = (this.counter < this.title.length() - 1) ? (ChatColor.GOLD + "" + ChatColor.BOLD + this.title.substring(this.counter + 1)) : "";
+            final String yellowPart = ChatColor.DARK_AQUA + "" + ChatColor.BOLD + this.title.charAt(this.counter);
+            final String orangePart = (this.counter < this.title.length() - 1) ? (ChatColor.AQUA + "" + ChatColor.BOLD + this.title.substring(this.counter + 1)) : "";
             this.objective.setDisplayName(whitePart + yellowPart + orangePart);
             ++this.counter;
         }
         else {
             if (this.tilting % 2 == 0) {
-                this.objective.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + this.title);
-            }
-            else {
+                this.objective.setDisplayName(ChatColor.AQUA  + "" + ChatColor.BOLD + this.title);
+            } else {
                 this.objective.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + this.title);
             }
             if (this.tilting == 4) {
                 this.tilting = 0;
                 this.counter = 0;
-            }
-            else {
+            } else {
                 ++this.tilting;
             }
         }

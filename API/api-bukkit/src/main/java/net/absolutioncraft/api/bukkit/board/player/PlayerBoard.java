@@ -36,7 +36,7 @@ public final class PlayerBoard implements ScoreboardCreator {
 
     @Override
     public void enableGlow(final @NotNull Plugin taskPlugin) {
-        this.glowingTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(taskPlugin, new GlowingTask(this, this.title), 0L, 4L).getTaskId();
+        this.glowingTaskId = Bukkit.getScheduler().runTaskTimerAsynchronously(taskPlugin, new GlowingTask(this, this.title), 0L, 3L).getTaskId();
     }
 
     @Override
@@ -79,14 +79,14 @@ public final class PlayerBoard implements ScoreboardCreator {
 
     @Override
     public void setSlotsFromList(@NotNull List<String> list) {
-        while(list.size()>15) {
-            list.remove(list.size()-1);
+        while (list.size() > 15) {
+            list.remove(list.size() - 1);
         }
 
         int slot = list.size();
 
-        if(slot < 15) {
-            for(int i=(slot +1); i<=15; i++) {
+        if (slot < 15) {
+            for (int i = (slot +1); i <= 15; i++) {
                 removeSlot(i);
             }
         }
