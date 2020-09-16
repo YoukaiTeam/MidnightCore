@@ -14,6 +14,7 @@ import org.bukkit.event.HandlerList;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public final class RedisMessageEvent extends Event {
     private static HandlerList handlerList = new HandlerList();
+    @Getter private @NonNull String channel;
     @Getter private @NonNull String message;
 
     @Override

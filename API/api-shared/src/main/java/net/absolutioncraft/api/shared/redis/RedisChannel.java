@@ -3,6 +3,7 @@ package net.absolutioncraft.api.shared.redis;
 import net.absolutioncraft.api.shared.redis.channel.Channel;
 import net.absolutioncraft.api.shared.redis.channel.listener.ChannelListener;
 import net.absolutioncraft.api.shared.redis.event.RedisMessageEvent;
+
 import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -35,11 +36,7 @@ public class RedisChannel<O> implements Channel<O> {
         pubSub = new JedisPubSub() {
             @Override
             public void onMessage(String channel, String message) {
-                Bukkit.getServer().getPluginManager().callEvent(new RedisMessageEvent(message));
-                /*channelListeners.forEach(listener -> {
-                    //listener.receiveMessage(message);
-                    System.out.println("Listeners ejecutados: " + listener.toString());
-                });*/
+                Bukkit.getServer().getPluginManager().callEvent(new RedisMessageEvent(channel, message));
             }
         };
 
